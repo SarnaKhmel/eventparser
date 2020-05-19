@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> {
@@ -32,7 +34,9 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ParseAdapter.ViewHolder holder, int position) {
-
+        ParseItem parseItem = parseItems.get(position);
+        holder.textView.setText(parseItem.getTitle());
+        Picasso.get().load(parseItem.getImgUrl()).into(holder.imageView );
     }
 
     @Override

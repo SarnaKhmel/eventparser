@@ -6,10 +6,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
+import org.w3c.dom.Element;
+
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -57,7 +64,28 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             try {
+                String url = "http://kinopalace.lviv.ua";
+                Document doc = Jsoup.connect(url).get();
+                //class="film-card"
+                Elements data = doc.select("div.film-card");
 
+                int size = data.size();
+                for(int i= 0; i<size; i++){
+                    String imgUrl  = data.select("a.film-card__img")
+                            .select("img")
+                            .eq(i)
+                            .attr("src");
+
+                    String title = data.select("a.film-card__title")
+                            .select("a")
+                            .eq(i)
+                            .text();
+                    parseItems.add(new ParseItem(imgUrl, title));
+                    Log.d("items", "img:" + imgUrl + "title" + title);
+
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
             return null;
         }

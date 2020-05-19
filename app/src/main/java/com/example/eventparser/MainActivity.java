@@ -37,14 +37,18 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ParseAdapter( parseItems, this);
         recyclerView.setAdapter(adapter);
+
+        Content content =  new Content();
+        content.execute();
     }
 
-    private class Context extends AsyncTask<Void, Void, Void>{
+    private class Content extends AsyncTask<Void, Void, Void>{
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             progressBar.setVisibility(View.VISIBLE);
             progressBar.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
+
 
         }
 
